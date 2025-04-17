@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resultado da Simulação - Casa Programada</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/resultado.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Configurações dinâmicas via PHP -->
+    <script src="/config.js.php"></script>
+    
+    <!-- Fallback para configurações globais caso o arquivo versoes.js não carregue -->
+    <script>
+        // Verificar se já existe
+        if (typeof CONFIG_FINANCIAMENTO === 'undefined') {
+            window.CONFIG_FINANCIAMENTO = {
+                PRAZO_MESES: 420, // 35 anos
+                TAXA_JUROS_ANUAL: 0.1149, // 11.49%
+                TEXTO_PRAZO: "420 meses (35 anos)"
+            };
+            
+            window.CONFIG_CONSORCIO = {
+                PRAZO_MESES: 240, // 20 anos
+                TAXA_ADMIN: 0.28, // 28%
+                TEXTO_PRAZO: "240 meses (20 anos)"
+            };
+            
+            window.VERSAO_SCRIPTS = "1.2-inline";
+            console.log("Configurações inline carregadas");
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div class="min-h-screen bg-gray-50">
+
+        <!-- Header -->
+
+        <header class="bg-gradient">
+
+            <div class="container">
+
+                <div class="header-content">
+
+                    <div class="logo-container">
+
+                        <img src="/images/logo.png" alt="Casa Programada" class="header-logo">
+
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Main Content -->
+
+        <main class="container resultado-page">
+
+            <div class="main-wrapper">
+
+                <div class="resultado-card animate__animated animate__fadeInUp">
+
+                    <div class="card-header">
+
+                        <i class="fas fa-chart-line icon-blue"></i>
+
+                        <h2>Resultado da Simulação</h2>
+
+                    </div>
+
+
+
+                    <!-- Formas de Compra -->
+                    <!-- Seção Formas de Compra -->
+                            <div class="formas-compra-section">
+                                     <h3>Entenda as 3 formas de comprar seu imóvel no Brasil</h3>
+                                            <div class="formas-compra-grid">
+                        <!-- À Vista -->
+                        <div class="forma-compra-card vista">
+                            <h4>À Vista</h4>
+                            <p><strong>Melhor opção;</strong><br>Todos gostariam;<br>Poucos podem.</p>
+                            <p class="subtitulo">Por quê?</p>
+                            <p>É difícil guardar dinheiro;<br>Demora muito tempo;<br>Dinheiro na mão é vendável.</p>
+                        </div>
+                        <!-- Financiamento -->
+                        <div class="forma-compra-card financiamento-comp">
+                            <h4>Financiamento</h4>
+                            <div class="compra-subcard"><span>Cadastro Pessoal</span><p>Nome com restrição; Idade; Tempo de serviço; Entrada; FGTS.</p></div>
+                            <div class="compra-subcard"><span>Cadastro Imóvel</span><p>Documentação irregular? Liberação do financiamento só com documentação em dia.</p></div>
+                            <div class="compra-subcard construtoras"><span>Construtora</span><p>Tempo 2 anos MRV, IMPAR, HM, ROSSI, METRO4, PDG, outras.</p></div>
+                        </div>
+                        <!-- Consórcio -->
+                        <div class="forma-compra-card consorcio-comp">
+                            <h4>Consórcio</h4>
+                            <p>LEI 11.795/08<br>Fiscalização BACEN</p>
+                            <p><strong>Todos Benefícios</strong><br>FGTS;<br>Rest. Imposto Renda;<br>Férias;<br>Renda Familiar.</p>
+                            <p><strong>Além da Vantagem</strong><br>Optar pelo lance de 50% da carta de crédito para contemplação.<br>Sorteio fixo e livre TODO MÊS.</p>
+                        </div>
+                    </div>
+                </div>
+<!-- Fim Seção Formas de Compra -->
+
+
+
+                    <div class="separador-titulo">
+
+                        <div class="linha"></div>
+
+                        <h3>Comparativo</h3>
+
+                        <div class="linha"></div>
+
+                    </div>
+
+
+
+                    <div class="resultado-grid">
+
+                        <div class="resultado-card financiamento animate__animated animate__fadeInLeft">
+
+                            <div class="resultado-card-header">
+
+                                <i class="fas fa-building"></i>
+
+                                <h4>Financiamento</h4>
+
+                            </div>
+
+                            <div class="resultado-content">
+
+                                <div class="resultado-item">
+
+                                    <span>Crédito:</span>
+
+                                    <span id="financiamento-credito" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item">
+
+                                    <span>Entrada Mínima (30%):</span>
+
+                                    <span id="entrada-minima-30" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item">
+
+                                    <span>Valor Financiado:</span>
+
+                                    <span id="financiamento-valor-financiado" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item taxa-item">
+
+                                    <span>Taxa de Juros:</span>
+
+                                    <span id="financiamento-taxa" class="resultado-valor taxa">11,49% a.a.</span>
+
+                                </div>
+
+                                <div class="resultado-item">
+                                    <span>Prazo:</span>
+                                    <span id="financiamento-prazo" class="resultado-valor">420 meses</span>
+                                </div>
+
+                                <div class="resultado-item">
+
+                                    <span>Parcela Mensal:</span>
+
+                                    <span id="financiamento-parcela" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item total-item">
+
+                                    <span>Total a Pagar:</span>
+
+                                    <span id="financiamento-total" class="resultado-valor-total fin">R$ 0,00</span>
+
+                                </div>
+
+                                <p class="explicacao-total">(Soma das parcelas + Entrada)</p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="versus-container animate__animated animate__pulse animate__infinite">
+
+                            <div class="versus-circle">VS</div>
+
+                        </div>
+
+
+
+                        <div class="resultado-card consorcio animate__animated animate__fadeInRight">
+
+                            <div class="resultado-card-header">
+
+                                <i class="fas fa-handshake"></i>
+
+                                <h4>Consórcio</h4>
+
+                            </div>
+
+                            <div class="resultado-content">
+
+                                <div class="resultado-item">
+
+                                    <span>Crédito:</span>
+
+                                    <span id="consorcio-credito" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item lance-subsidiado-item">
+
+                                    <span>Lance Subsidiado (25%):</span>
+
+                                    <span id="consorcio-lance-subsidiado" class="resultado-valor lance-subsidiado">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item taxa-item">
+
+                                    <span>Taxa Administrativa:</span>
+
+                                    <span id="consorcio-taxa" class="resultado-valor taxa">28,00%</span>
+
+                                </div>
+
+                                <div class="resultado-item">
+
+                                    <span>Prazo:</span>
+
+                                    <span id="consorcio-prazo" class="resultado-valor">240 meses</span>
+
+                                </div>
+
+                                <div class="resultado-item">
+
+                                    <span>Parcela Mensal:</span>
+
+                                    <span id="consorcio-parcela" class="resultado-valor">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item parcela-reduzida-item">
+
+                                    <span>Parcela Reduzida (50%):</span>
+
+                                    <span id="consorcio-parcela-reduzida" class="resultado-valor parcela-reduzida">R$ 0,00</span>
+
+                                </div>
+
+                                <div class="resultado-item total-item">
+
+                                    <span>Total a Pagar:</span>
+
+                                    <span id="consorcio-total" class="resultado-valor resultado-valor-total cons">R$ 0,00</span>
+
+                                </div>
+
+                                <!-- Formas de Contemplação -->
+                                <div class="contemplacao-info">
+                                    <p><strong>4 Formas de Contemplação todos os meses:</strong><br>Sorteio - Lance Livre - Fixo 25% - Fixo 50%</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="economia-container animate__animated animate__fadeInUp">
+                        <div class="economia-card">
+                            <div class="economia-content">
+                                <h3>Economia Total com Consórcio</h3>
+                                <p id="economia-valor">R$ 0,00</p>
+                                <span class="economia-percentual" id="economia-percentual">0% de economia</span>
+                            </div>
+                            <div class="bacen-info">
+                                <img src="/images/bacen-logo.png" alt="Logo BACEN" class="bacen-logo">
+                                <p>Lei do Consórcio 11.795/2008</p>
+                                <p class="economia-message">O imediatismo é inimigo da economia</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="acao-container">
+
+                        <a href="#" class="btn-agendar animate__animated animate__pulse animate__infinite">
+
+                            <i class="fas fa-calendar-alt"></i>
+
+                            Agendar Consultoria Gratuita
+
+                        </a>
+
+                        
+
+                        <a href="/index.html" class="btn-voltar">
+
+                            <i class="fas fa-arrow-left"></i>
+
+                            Voltar ao Simulador
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Contact Footer -->
+
+                <div class="contact-footer">
+
+                    <div class="contact-content">
+
+                        <div class="contact-info">
+
+                            <i class="fas fa-phone"></i>
+
+                            <div>
+
+                                <p class="contact-title">AGENDE SUA CONSULTORIA:</p>
+
+                                <p class="contact-subtitle">Atendimento personalizado</p>
+
+                            </div>
+
+                        </div>
+
+                        <a href="https://wa.me/5519991946424" target="_blank" class="whatsapp-button">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- Configurações carregadas de múltiplas fontes para garantir disponibilidade -->
+    <script src="/versoes.js?v=1.2"></script>
+    <script src="/js/resultado.js"></script>
+
+</body>
+
+</html>

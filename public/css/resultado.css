@@ -1,0 +1,2038 @@
+/* Estilos para a página de resultados */
+
+:root {
+
+    --azul-escuro: #046986;
+
+    --azul-medio: #1A5DAD;
+
+    --azul-claro: #0a8eab;
+
+    --laranja: #f68b1f;
+
+    --laranja-claro: #ff9f3f;
+
+    --verde: #27AE60;
+
+    --cinza-claro: #f9f9f9;
+
+    --cinza-input: #f5f5f5;
+
+    --cinza-borda: #e0e0e0;
+
+    --cinza-escuro: #333333;
+
+    --texto-escuro: #2D3748;
+
+    --texto-medio: #4A5568;
+
+    --texto-claro: #718096;
+
+    --branco: #ffffff;
+
+    --sombra: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+
+
+.resultado-page {
+
+    padding-top: 2rem;
+
+    padding-bottom: 2rem;
+
+}
+
+
+
+.resultado-card {
+
+    max-width: 1200px;
+
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding: 2rem;
+
+    box-shadow: var(--sombra);
+
+    border-radius: 12px;
+
+}
+
+
+
+/* Estilos para informações do cliente */
+
+.cliente-info {
+
+    margin-bottom: 2rem;
+
+    padding: 1.5rem;
+
+    background-color: var(--cinza-claro);
+
+    border-radius: 8px;
+
+}
+
+
+
+.cliente-info h3 {
+
+    margin-top: 0;
+
+    margin-bottom: 1rem;
+
+    color: var(--azul-escuro);
+
+    font-size: 1.25rem;
+
+}
+
+
+
+.cliente-dados {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 1.5rem;
+
+    margin-bottom: 1rem;
+
+}
+
+
+
+.cliente-item {
+
+    flex: 1;
+
+    min-width: 200px;
+
+}
+
+
+
+.cliente-item strong {
+
+    color: var(--azul-medio);
+
+}
+
+
+
+/* Separador com título */
+
+.separador-titulo {
+
+    display: flex;
+
+    align-items: center;
+
+    margin: 2.5rem 0;
+
+}
+
+
+
+.separador-titulo h3 {
+
+    margin: 0 1rem;
+
+    color: var(--azul-escuro);
+
+    font-size: 1.5rem;
+
+    white-space: nowrap;
+
+}
+
+
+
+.separador-titulo .linha {
+
+    flex: 1;
+
+    height: 2px;
+
+    background-color: var(--azul-claro);
+
+    opacity: 0.3;
+
+}
+
+
+
+/* Grid de resultados */
+
+.resultado-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr auto 1fr;
+
+    gap: 1rem;
+
+    margin-bottom: 2.5rem;
+
+}
+
+
+
+/* Cartões de resultado */
+
+.resultado-card {
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.resultado-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+}
+
+
+
+.financiamento, .consorcio {
+
+    background-color: var(--branco);
+
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+}
+
+
+
+.financiamento {
+
+    border-left: 5px solid var(--azul-medio);
+
+}
+
+
+
+.consorcio {
+
+    border-left: 5px solid var(--laranja);
+
+}
+
+
+
+.resultado-card-header {
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 1.25rem;
+
+    background-color: var(--cinza-claro);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.resultado-card-header i {
+
+    font-size: 1.5rem;
+
+    margin-right: 0.75rem;
+
+}
+
+
+
+.financiamento .resultado-card-header i {
+
+    color: var(--azul-medio);
+
+}
+
+
+
+.consorcio .resultado-card-header i {
+
+    color: var(--laranja);
+
+}
+
+
+
+.resultado-card-header h4 {
+
+    margin: 0;
+
+    font-size: 1.25rem;
+
+    color: var(--texto-escuro);
+
+}
+
+
+
+.resultado-content {
+
+    padding: 1.5rem;
+
+}
+
+
+
+.resultado-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+
+    padding-bottom: 0.75rem;
+
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.resultado-item:last-child {
+
+    border-bottom: none;
+
+}
+
+
+
+.taxa-item {
+
+    background-color: rgba(0, 0, 0, 0.03);
+
+    padding: 0.95rem;
+
+    border-radius: 8px;
+
+    margin: 1rem 0;
+
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+}
+
+
+
+.financiamento .taxa-item:hover {
+
+    background-color: rgba(4, 105, 134, 0.1);
+
+    transform: scale(1.02);
+
+}
+
+
+
+.consorcio .taxa-item:hover {
+
+    background-color: rgba(246, 139, 31, 0.1);
+
+    transform: scale(1.02);
+
+}
+
+
+
+.taxa {
+
+    font-weight: 700;
+
+    font-size: 1.15rem;
+
+}
+
+
+
+.financiamento .taxa {
+
+    color: var(--azul-escuro);
+
+}
+
+
+
+.consorcio .taxa {
+
+    color: var(--laranja);
+
+}
+
+
+
+.total-item {
+
+    margin-top: 1.5rem;
+
+    padding: 1rem;
+
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+
+    border-bottom: none;
+
+    font-weight: bold;
+
+    border-radius: 8px;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+
+
+.financiamento .total-item {
+
+    background-color: rgba(4, 105, 134, 0.05);
+
+}
+
+
+
+.consorcio .total-item {
+
+    background-color: rgba(246, 139, 31, 0.05);
+
+}
+
+
+
+.financiamento .total-item:hover {
+
+    background-color: rgba(4, 105, 134, 0.1);
+
+    transform: scale(1.03);
+
+    box-shadow: 0 4px 15px rgba(4, 105, 134, 0.15);
+
+}
+
+
+
+.consorcio .total-item:hover {
+
+    background-color: rgba(246, 139, 31, 0.1);
+
+    transform: scale(1.03);
+
+    box-shadow: 0 4px 15px rgba(246, 139, 31, 0.15);
+
+}
+
+
+
+.resultado-valor {
+
+    color: var(--texto-medio);
+
+}
+
+
+
+.resultado-valor-total {
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    animation: pulse 2s infinite;
+
+}
+
+
+
+.fin {
+
+    color: var(--azul-escuro);
+
+}
+
+
+
+/* Adicionar este estilo */
+
+.explicacao-total {
+
+    font-size: 0.8em;
+
+    color: var(--texto-claro);
+
+    text-align: right;
+
+    margin-top: -0.5rem; /* Ajustar espaçamento */
+
+    margin-right: 1rem; /* Alinhar com o valor */
+
+}
+
+
+
+.cons {
+
+    color: var(--laranja);
+
+}
+
+
+
+/* VS no meio */
+
+.versus-container {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+
+.versus-circle {
+
+    width: 60px;
+
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: var(--laranja);
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 1.25rem;
+
+    border-radius: 50%;
+
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+
+}
+
+
+
+/* Box de economia */
+
+.economia-wrapper {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 2rem;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+}
+
+
+
+.economia-card {
+
+    background: linear-gradient(135deg, #FF8C00, #FFA500);
+
+    border-radius: 15px;
+
+    padding: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    margin: 20px 0;
+
+}
+
+
+
+.economia-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+
+.economia-content h3 {
+
+    font-size: 1.5rem;
+
+    margin: 0;
+
+    font-weight: 600;
+
+    text-align: left;
+
+}
+
+
+
+.economia-content p {
+
+    font-size: 2.5rem;
+
+    margin: 5px 0;
+
+    font-weight: bold;
+
+    text-align: left;
+
+}
+
+
+
+.economia-percentual {
+
+    font-size: 1.2rem;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    padding: 5px 15px;
+
+    border-radius: 20px;
+
+    display: inline-block;
+
+}
+
+
+
+.bacen-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    gap: 10px;
+
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+
+    padding-left: 30px;
+
+    margin-left: 30px;
+
+}
+
+
+
+.bacen-logo {
+
+    width: 120px;
+
+    height: auto;
+
+    object-fit: contain;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+.bacen-info p {
+
+    margin: 0;
+
+    font-size: 1.1rem;
+
+    color: white;
+
+    font-weight: 500;
+
+}
+
+
+
+.economia-message {
+
+    margin: 5px 0;
+
+    font-size: 1.1rem;
+
+    color: white;
+
+    text-align: center;
+
+}
+
+
+
+/* Vantagens do Consórcio */
+
+.vantagens-container {
+
+    margin: 3rem 0;
+
+}
+
+
+
+.vantagens-titulo {
+
+    text-align: center;
+
+    margin-bottom: 2rem;
+
+    color: var(--azul-escuro);
+
+    font-size: 1.75rem;
+
+}
+
+
+
+.vantagens-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 1.5rem;
+
+}
+
+
+
+.vantagem-card {
+
+    background-color: var(--branco);
+
+    padding: 1.5rem;
+
+    border-radius: 10px;
+
+    box-shadow: var(--sombra);
+
+    text-align: center;
+
+    transition: transform 0.3s ease;
+
+}
+
+
+
+.vantagem-card:hover {
+
+    transform: translateY(-8px);
+
+}
+
+
+
+.vantagem-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 1rem;
+
+    background-color: var(--laranja);
+
+    color: white;
+
+    font-size: 1.75rem;
+
+    border-radius: 50%;
+
+}
+
+
+
+.vantagem-card h4 {
+
+    color: var(--texto-escuro);
+
+    margin: 0 0 0.75rem 0;
+
+    font-size: 1.25rem;
+
+}
+
+
+
+.vantagem-card p {
+
+    color: var(--texto-medio);
+
+    margin: 0;
+
+    line-height: 1.5;
+
+}
+
+
+
+/* Ações */
+
+.acao-container {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 1rem;
+
+    justify-content: center;
+
+    margin-top: 3rem;
+
+}
+
+
+
+.btn-agendar {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    padding: 0.75rem 2rem;
+
+    background-color: var(--laranja);
+
+    color: white;
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+
+    font-size: 1.125rem;
+
+    height: 40px;
+
+}
+
+
+
+.btn-agendar:hover {
+
+    background-color: var(--laranja-claro);
+
+    transform: translateY(-2px);
+
+}
+
+
+
+.btn-voltar {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    padding: 0.75rem 2rem;
+
+    background-color: var(--cinza-claro);
+
+    color: var(--texto-medio);
+
+    text-decoration: none;
+
+    border-radius: 6px;
+
+    transition: all 0.3s ease;
+
+    font-size: 1.125rem;
+
+    height: 40px;
+
+}
+
+
+
+.btn-voltar:hover {
+
+    background-color: var(--azul-claro);
+
+    color: white;
+
+}
+
+
+
+/* Responsividade */
+
+@media (max-width: 1024px) {
+
+    .resultado-grid {
+
+        grid-template-columns: 1fr;
+
+        grid-template-rows: auto auto auto;
+
+    }
+
+    
+
+    .versus-container {
+
+        margin: 1.5rem 0;
+
+        transform: rotate(90deg);
+
+    }
+
+}
+
+
+
+@media (max-width: 768px) {
+
+    .cliente-dados {
+
+        flex-direction: column;
+
+        gap: 0.75rem;
+
+    }
+
+    
+
+    .cliente-item {
+
+        min-width: auto;
+
+    }
+
+    
+
+    .resultado-card {
+
+        padding: 1.25rem;
+
+    }
+
+    
+
+    .vantagens-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    
+
+    .acao-container {
+
+        flex-direction: column;
+
+    }
+
+    
+
+    .btn-agendar, .btn-voltar {
+
+        width: 100%;
+
+    }
+
+    
+
+    .vantagens-cards-compact {
+
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 0.75rem;
+
+    }
+
+    
+
+    .vantagem-compact {
+
+        width: 100%;
+
+    }
+
+    
+
+    .resultado-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 2rem;
+
+    }
+
+    
+
+    .versus-container {
+
+        display: none;
+
+    }
+
+    
+
+    .resultado-card {
+
+        width: 100%;
+
+    }
+
+    
+
+    .economia-card {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 20px;
+
+    }
+
+    
+
+    .economia-content {
+
+        align-items: center;
+
+        margin-bottom: 20px;
+
+    }
+
+    
+
+    .economia-content h3,
+
+    .economia-content p {
+
+        text-align: center;
+
+    }
+
+    
+
+    .bacen-info {
+
+        border-left: none;
+
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+
+        padding-left: 0;
+
+        margin-left: 0;
+
+        padding-top: 20px;
+
+        margin-top: 20px;
+
+    }
+
+    
+
+    .bacen-logo {
+
+        width: 100px;
+
+    }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+    .resultado-card-header {
+
+        flex-direction: column;
+
+        text-align: center;
+
+    }
+
+    
+
+    .resultado-card-header i {
+
+        margin-right: 0;
+
+        margin-bottom: 0.5rem;
+
+    }
+
+    
+
+    .vantagens-cards-compact {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    
+
+    .card-header h2 {
+
+        font-size: 1.25rem;
+
+    }
+
+    
+
+    .resultado-card-header h4 {
+
+        font-size: 1.1rem;
+
+    }
+
+    
+
+    .resultado-valor-total {
+
+        font-size: 1.2rem;
+
+    }
+
+    
+
+    .vantagem-compact .tooltip-text {
+
+        width: 200px;
+
+        margin-left: -100px;
+
+    }
+
+    
+
+    .acao-container {
+
+        flex-direction: column;
+
+    }
+
+    
+
+    .btn-agendar, .btn-voltar {
+
+        width: 100%;
+
+        margin: 0.5rem 0;
+
+        text-align: center;
+
+    }
+
+    
+
+    .tooltip-text {
+
+        display: none;
+
+    }
+
+    
+
+    /* Mostrar tooltips em mobile com toque */
+
+    .vantagem-compact:active .tooltip-text {
+
+        display: block;
+
+        visibility: visible;
+
+        opacity: 1;
+
+    }
+
+}
+
+
+
+/* Vantagens do Consórcio em formato compacto */
+
+.vantagens-destaque {
+
+    margin: 1.5rem 0;
+
+    text-align: center;
+
+}
+
+
+
+.vantagens-destaque h3 {
+
+    color: var(--azul-escuro);
+
+    font-size: 1.25rem;
+
+    margin-bottom: 1rem;
+
+    position: relative;
+
+    display: inline-block;
+
+}
+
+
+
+.vantagens-destaque h3:after {
+
+    content: '';
+
+    position: absolute;
+
+    bottom: -5px;
+
+    left: 10%;
+
+    width: 80%;
+
+    height: 3px;
+
+    background-color: var(--laranja);
+
+    border-radius: 2px;
+
+}
+
+
+
+.vantagens-cards-compact {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 1rem;
+
+    margin-top: 1rem;
+
+}
+
+
+
+.vantagem-compact {
+
+    display: flex;
+
+    align-items: center;
+
+    background-color: var(--cinza-claro);
+
+    border-radius: 50px;
+
+    padding: 0.5rem 1rem;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    border-left: 3px solid var(--laranja);
+
+    position: relative;
+
+    cursor: help;
+
+}
+
+
+
+.vantagem-compact:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+}
+
+
+
+.vantagem-compact .tooltip-text {
+
+    visibility: hidden;
+
+    width: 250px;
+
+    background-color: rgba(4, 105, 134, 0.95);
+
+    color: var(--branco);
+
+    text-align: center;
+
+    border-radius: 6px;
+
+    padding: 12px;
+
+    position: absolute;
+
+    z-index: 1;
+
+    bottom: 125%;
+
+    left: 50%;
+
+    margin-left: -125px;
+
+    opacity: 0;
+
+    transition: opacity 0.3s;
+
+    font-size: 0.85rem;
+
+    line-height: 1.4;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+.vantagem-compact .tooltip-text::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 100%;
+
+    left: 50%;
+
+    margin-left: -5px;
+
+    border-width: 5px;
+
+    border-style: solid;
+
+    border-color: rgba(4, 105, 134, 0.95) transparent transparent transparent;
+
+}
+
+
+
+.vantagem-compact:hover .tooltip-text {
+
+    visibility: visible;
+
+    opacity: 1;
+
+}
+
+
+
+.vantagem-icon-small {
+
+    width: 30px;
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: var(--laranja);
+
+    color: white;
+
+    font-size: 0.9rem;
+
+    border-radius: 50%;
+
+    margin-right: 0.75rem;
+
+}
+
+
+
+.vantagem-compact p {
+
+    margin: 0;
+
+    font-size: 0.9rem;
+
+    color: var(--texto-medio);
+
+}
+
+
+
+.vantagem-compact p span {
+
+    font-weight: 600;
+
+    color: var(--texto-escuro);
+
+}
+
+
+
+/* Adicionar destaque pulsante para valores totais */
+
+@keyframes pulse {
+
+    0% {
+
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+
+    }
+
+    70% {
+
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    }
+
+    100% {
+
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+
+    }
+
+}
+
+
+
+/* Melhorias gerais para telas pequenas */
+
+@media (max-width: 992px) {
+
+    .container {
+
+        padding-left: 15px;
+
+        padding-right: 15px;
+
+    }
+
+    
+
+    .resultado-card {
+
+        padding: 1rem;
+
+    }
+
+    
+
+    .resultado-item {
+
+        padding: 0.5rem 0;
+
+    }
+
+}
+
+
+
+/* Ajustar animações em dispositivos com preferência por movimento reduzido */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .animate__animated {
+
+        animation: none !important;
+
+        transition-duration: 0.001s !important;
+
+    }
+
+}
+
+
+
+/* Estilos para a Seção Formas de Compra */
+
+.formas-compra-section {
+
+    margin: 2.5rem 0;
+
+    padding: 2rem 0;
+
+}
+
+
+
+.formas-compra-section h3 {
+
+    text-align: center;
+
+    margin-bottom: 2rem;
+
+    color: var(--azul-escuro);
+
+    font-size: 1.5rem;
+
+    position: relative;
+
+    padding-bottom: 0.5rem;
+
+}
+
+
+
+.formas-compra-section h3::after {
+
+    content: '';
+
+    display: block;
+
+    width: 80px;
+
+    height: 3px;
+
+    background-color: var(--laranja);
+
+    position: absolute;
+
+    bottom: 0;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+}
+
+
+
+.formas-compra-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 2rem;
+
+    align-items: start;
+
+}
+
+
+
+.forma-compra-card {
+
+    border-radius: 8px;
+
+    padding: 0;
+
+    transition: none;
+
+    text-align: center;
+
+}
+
+
+
+.forma-compra-card:hover {
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+
+.forma-compra-card h4 {
+
+    display: inline-block;
+
+    margin-top: 0;
+
+    margin-bottom: 1.5rem;
+
+    font-size: 1.1rem;
+
+    color: var(--branco);
+
+    padding: 0.5rem 1.5rem;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+}
+
+
+
+.forma-compra-card.vista h4 {
+
+    background-color: var(--azul-escuro);
+
+}
+
+
+
+.forma-compra-card.financiamento-comp h4 {
+
+    background-color: var(--azul-escuro);
+
+}
+
+
+
+.forma-compra-card.consorcio-comp h4 {
+
+    background-color: var(--azul-escuro);
+
+}
+
+
+
+.forma-compra-card p {
+
+    color: var(--texto-medio);
+
+    line-height: 1.6;
+
+    margin-bottom: 0.8rem;
+
+    font-size: 0.9rem;
+
+}
+
+
+
+/* Estilo específico para o subtítulo 'Por quê?' */
+
+.forma-compra-card.vista p.subtitulo {
+
+    color: var(--laranja);
+
+    font-weight: 600;
+
+    margin-top: 1rem;
+
+    margin-bottom: 0.5rem;
+
+}
+
+
+
+/* Subcards do Financiamento */
+
+.compra-subcard {
+
+    border-radius: 6px;
+
+    padding: 0;
+
+    margin-bottom: 1.5rem;
+
+    text-align: center;
+
+}
+
+
+
+.compra-subcard span {
+
+    display: inline-block;
+
+    font-weight: 600;
+
+    color: var(--branco);
+
+    margin-bottom: 0.5rem;
+
+    font-size: 0.9rem;
+
+    padding: 0.3rem 1rem;
+
+    border-radius: 50px;
+
+    background-color: var(--laranja);
+
+}
+
+
+
+.compra-subcard p {
+
+    font-size: 0.9rem;
+
+    color: var(--texto-medio);
+
+    margin-bottom: 0;
+
+    line-height: 1.5;
+
+}
+
+
+
+.compra-subcard.construtoras span {
+
+    background-color: var(--laranja);
+
+    color: var(--branco);
+
+}
+
+
+
+/* Ajustes Responsivos para a nova seção */
+
+@media (max-width: 992px) {
+
+    .formas-compra-grid {
+
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+        gap: 1.5rem;
+
+    }
+
+    
+
+    .forma-compra-card {
+
+        margin-bottom: 1rem;
+
+    }
+
+}
+
+
+
+@media (max-width: 768px) {
+
+    .formas-compra-section h3 {
+
+        font-size: 1.3rem;
+
+    }
+
+    
+
+    .formas-compra-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 2rem;
+
+    }
+
+    
+
+    .forma-compra-card {
+
+        margin-bottom: 2rem;
+
+    }
+
+}
+
+
+
+/* Estilos para os novos itens do Consórcio */
+
+.lance-subsidiado-item,
+.parcela-reduzida-item {
+    background-color: rgba(246, 139, 31, 0.08); /* Fundo laranja claro */
+    padding: 0.95rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border-left: 3px solid var(--laranja);
+}
+
+.lance-subsidiado-item:hover,
+.parcela-reduzida-item:hover {
+    background-color: rgba(246, 139, 31, 0.15);
+    transform: scale(1.02);
+}
+
+.lance-subsidiado,
+.parcela-reduzida {
+    font-weight: 700;
+    font-size: 1.1rem; /* Tamanho um pouco menor que a taxa */
+    color: var(--laranja);
+}
+
+/* Estilo para Informações de Contemplação */
+.contemplacao-info {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cinza-borda);
+    font-size: 0.85rem;
+    color: var(--texto-claro);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.contemplacao-info strong {
+    color: var(--texto-medio);
+    font-weight: 600;
+}
+
+.total-item {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.financiamento .total-item {
+    background-color: rgba(4, 105, 134, 0.05);
+}
+
+.consorcio .total-item {
+    background-color: rgba(246, 139, 31, 0.05);
+}
+
+.financiamento .total-item:hover {
+    background-color: rgba(4, 105, 134, 0.1);
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(4, 105, 134, 0.15);
+}
+
+.consorcio .total-item:hover {
+    background-color: rgba(246, 139, 31, 0.1);
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(246, 139, 31, 0.15);
+}
+
+.entrada-minima, .valor-financiado {
+    font-size: 1.1em;
+    color: var(--azul-escuro);
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.entrada-minima span, .valor-financiado span {
+    font-weight: bold;
+    color: var(--azul-escuro);
+}
+
+/* Adicionar este estilo */
+.explicacao-total {
+    font-size: 0.8em;
+    color: var(--texto-claro);
+    text-align: right;
+    margin-top: -0.5rem; /* Ajustar espaçamento */
+    margin-right: 1rem; /* Alinhar com o valor */
+}
+
+.acao-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.bacen-badge {
+    background-color: var(--branco);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+    max-width: 300px;
+    border-left: 4px solid var(--azul-escuro);
+}
+
+.bacen-message {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bacen-message p {
+    margin: 0;
+    color: var(--azul-escuro);
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.bacen-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.bacen-logo {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+}
+
+.bacen-info p {
+    margin: 0;
+    font-size: 1.1rem;
+    text-align: right;
+    line-height: 1.4;
+    color: var(--azul-medio);
+    font-weight: 500;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 992px) {
+    .economia-wrapper {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .economia-card {
+        width: 100%;
+    }
+
+    .bacen-badge {
+        max-width: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .economia-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .economia-left {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .economia-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .economia-right {
+        border-left: none;
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+        padding-left: 0;
+        padding-top: 20px;
+        align-items: center;
+    }
+
+    .economia-right p {
+        text-align: center;
+    }
+
+    .bacen-logo {
+        width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .acao-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .bacen-badge {
+        max-width: none;
+    }
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-button i {
+    font-size: 1.5rem;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
