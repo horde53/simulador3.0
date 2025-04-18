@@ -1,3 +1,135 @@
+// Sistema de Modal
+const Modal = {
+    simulacaoModal: null,
+    confirmModal: null,
+    
+    init() {
+        console.log("Inicializando sistema de modal");
+        this.simulacaoModal = document.getElementById('simulacao-modal');
+        this.confirmModal = document.getElementById('confirm-modal');
+        
+        if (!this.simulacaoModal) {
+            console.error("Modal de simulação não encontrado!");
+            return;
+        }
+        
+        if (!this.confirmModal) {
+            console.error("Modal de confirmação não encontrado!");
+            return;
+        }
+        
+        this.setupEventListeners();
+    },
+    
+    setupEventListeners() {
+        // Fechar ao clicar no X ou no botão fechar
+        const closeSimulacaoBtn = document.getElementById('close-simulacao-modal');
+        const closeDetailsBtn = document.getElementById('close-details');
+        const closeConfirmBtn = document.getElementById('close-confirm-modal');
+        const confirmCancelBtn = document.getElementById('confirm-cancel');
+        
+        // Usar arrow functions para manter o contexto do 'this'
+        if (closeSimulacaoBtn) {
+            closeSimulacaoBtn.addEventListener('click', () => {
+                console.log('Clicou no X do modal de simulação');
+                this.closeSimulacaoModal();
+            });
+        }
+        
+        if (closeDetailsBtn) {
+            closeDetailsBtn.addEventListener('click', () => {
+                console.log('Clicou no botão fechar do modal de simulação');
+                this.closeSimulacaoModal();
+            });
+        }
+        
+        if (closeConfirmBtn) {
+            closeConfirmBtn.addEventListener('click', () => {
+                console.log('Clicou no X do modal de confirmação');
+                this.closeConfirmModal();
+            });
+        }
+        
+        if (confirmCancelBtn) {
+            confirmCancelBtn.addEventListener('click', () => {
+                console.log('Clicou no botão cancelar do modal de confirmação');
+                this.closeConfirmModal();
+            });
+        }
+        
+        // Fechar ao clicar fora do modal
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                console.log('Clicou fora do modal');
+                if (event.target === this.simulacaoModal) {
+                    this.closeSimulacaoModal();
+                } else if (event.target === this.confirmModal) {
+                    this.closeConfirmModal();
+                }
+            }
+        });
+        
+        // Fechar com ESC
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                console.log('Pressionou ESC');
+                this.closeSimulacaoModal();
+                this.closeConfirmModal();
+            }
+        });
+    },
+    
+    openSimulacaoModal() {
+        this.simulacaoModal = document.getElementById('simulacao-modal');
+        if (!this.simulacaoModal) {
+            console.error("Modal de simulação não encontrado ao tentar abrir!");
+            return;
+        }
+        console.log("Abrindo modal de simulação");
+        this.simulacaoModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Reconfigurar event listeners ao abrir o modal
+        this.setupEventListeners();
+    },
+    
+    closeSimulacaoModal() {
+        this.simulacaoModal = document.getElementById('simulacao-modal');
+        if (!this.simulacaoModal) {
+            console.error("Modal de simulação não encontrado ao tentar fechar!");
+            return;
+        }
+        console.log("Fechando modal de simulação");
+        this.simulacaoModal.style.display = 'none';
+        document.body.style.overflow = '';
+    },
+    
+    openConfirmModal() {
+        this.confirmModal = document.getElementById('confirm-modal');
+        if (!this.confirmModal) {
+            console.error("Modal de confirmação não encontrado ao tentar abrir!");
+            return;
+        }
+        console.log("Abrindo modal de confirmação");
+        this.confirmModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Reconfigurar event listeners ao abrir o modal
+        this.setupEventListeners();
+    },
+    
+    closeConfirmModal() {
+        this.confirmModal = document.getElementById('confirm-modal');
+        if (!this.confirmModal) {
+            console.error("Modal de confirmação não encontrado ao tentar fechar!");
+            return;
+        }
+        console.log("Fechando modal de confirmação");
+        this.confirmModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+};
+
 // Inicialização do painel admin
 document.addEventListener('DOMContentLoaded', function() {
     // Verificar status do banco de dados
@@ -12,7 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adicionar eventos aos elementos
     setupTabs();
     setupSearchHandlers();
-    setupModalEvents();
+    
+    // Inicializar sistema de modais
+    Modal.init();
 });
 
 // Verificar status do banco de dados
@@ -173,27 +307,6 @@ function setupSearchHandlers() {
     });
 }
 
-// Configurar eventos de modal
-function setupModalEvents() {
-    // Modal de confirmação
-    document.getElementById('close-confirm-modal').addEventListener('click', function() {
-        document.getElementById('confirm-modal').style.display = 'none';
-    });
-    
-    document.getElementById('confirm-cancel').addEventListener('click', function() {
-        document.getElementById('confirm-modal').style.display = 'none';
-    });
-    
-    // Modal de simulação
-    document.getElementById('close-simulacao-modal').addEventListener('click', function() {
-        document.getElementById('simulacao-modal').style.display = 'none';
-    });
-    
-    document.getElementById('close-details').addEventListener('click', function() {
-        document.getElementById('simulacao-modal').style.display = 'none';
-    });
-}
-
 // Carregar simulações
 function loadSimulacoes(pagina, limite = 10) {
     fetch(`/api/simulacoes?pagina=${pagina}&limite=${limite}`)
@@ -235,14 +348,30 @@ function loadSimulacoes(pagina, limite = 10) {
 
 // Visualizar detalhes da simulação
 function viewSimulacao(simulacaoId) {
+    console.log(`Visualizando simulação com ID: ${simulacaoId}`);
+    
     fetch(`/api/simulacao/${simulacaoId}`)
         .then(response => response.json())
         .then(data => {
+            console.log("Dados da simulação recebidos:", data);
             const detailsContainer = document.getElementById('simulacao-details');
+            
+            if (!detailsContainer) {
+                console.error("Container de detalhes não encontrado!");
+                return;
+            }
             
             // Formatar data
             const data_criacao = new Date(data.dataCriacao);
             const dataFormatada = data_criacao.toLocaleDateString('pt-BR') + ' ' + data_criacao.toLocaleTimeString('pt-BR');
+            
+            // Calcular valores totais corretamente
+            const valorEntrada = data.valorEntrada || 0;
+            const valorFinanciado = data.valorFinanciado || 0;
+            const valorTotalFinanciamento = (data.valorTotalFinanciamento || data.financiamento?.totalPago || data.financiamento?.total || 0) + valorEntrada;
+            const valorTotalConsorcio = data.valorTotalConsorcio || data.consorcio?.totalPago || data.consorcio?.total || 0;
+            const economiaTotal = valorTotalFinanciamento - valorTotalConsorcio;
+            const porcentagemEconomia = ((economiaTotal / valorTotalFinanciamento) * 100).toFixed(2);
             
             // Criar HTML com detalhes - Layout melhorado
             let html = `
@@ -251,11 +380,11 @@ function viewSimulacao(simulacaoId) {
                         <h4 style="color: #0066cc; border-bottom: 2px solid #0066cc; padding-bottom: 8px; margin-bottom: 15px;">
                             <i class="fas fa-user"></i> Dados do Cliente
                         </h4>
-                        <p><strong>Nome:</strong> ${data.cliente.nome || 'Não informado'}</p>
-                        <p><strong>Email:</strong> ${data.cliente.email || 'Não informado'}</p>
-                        <p><strong>Telefone:</strong> ${data.cliente.telefone || 'Não informado'}</p>
-                        <p><strong>Profissão:</strong> ${data.cliente.profissao || 'Não informado'}</p>
-                        <p><strong>Renda:</strong> ${data.cliente.renda ? formatarMoeda(data.cliente.renda) : 'Não informado'}</p>
+                        <p><strong>Nome:</strong> ${data.cliente?.nome || data.nome || 'Não informado'}</p>
+                        <p><strong>Email:</strong> ${data.cliente?.email || data.email || 'Não informado'}</p>
+                        <p><strong>Telefone:</strong> ${data.cliente?.telefone || data.telefone || 'Não informado'}</p>
+                        <p><strong>Profissão:</strong> ${data.cliente?.profissao || data.profissao || 'Não informado'}</p>
+                        <p><strong>Renda:</strong> ${data.cliente?.renda ? formatarMoeda(data.cliente.renda) : 'Não informado'}</p>
                         <p><strong>Data da Simulação:</strong> ${dataFormatada}</p>
                     </div>
                     
@@ -265,12 +394,12 @@ function viewSimulacao(simulacaoId) {
                                 <i class="fas fa-university"></i> Financiamento
                             </h4>
                             <p><strong>Valor do Imóvel:</strong> ${formatarMoeda(data.valorImovel || data.valorCredito)}</p>
-                            <p><strong>Valor da Entrada:</strong> ${formatarMoeda(data.valorEntrada || 0)}</p>
-                            <p><strong>Valor Financiado:</strong> ${formatarMoeda(data.valorFinanciado || 0)}</p>
+                            <p><strong>Valor da Entrada:</strong> ${formatarMoeda(valorEntrada)}</p>
+                            <p><strong>Valor Financiado:</strong> ${formatarMoeda(valorFinanciado)}</p>
                             <p><strong>Taxa de Juros:</strong> ${data.financiamento?.taxaAnual?.toFixed(2) || 11.49}% a.a.</p>
                             <p><strong>Parcela Mensal:</strong> ${formatarMoeda(data.valorParcela || data.financiamento?.valorParcela || 0)}</p>
                             <p><strong>Prazo:</strong> ${data.financiamento?.parcelas || data.prazo || 420} meses</p>
-                            <p><strong>Total Financiamento:</strong> ${formatarMoeda(data.valorTotalFinanciamento || data.financiamento?.totalPago || data.financiamento?.total || 0)}</p>
+                            <p><strong>Total Financiamento:</strong> ${formatarMoeda(valorTotalFinanciamento)}</p>
                         </div>
                         <div style="background-color: white; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                             <h4 style="color: #FF8C00; border-bottom: 2px solid #FF8C00; padding-bottom: 8px; margin-bottom: 15px;">
@@ -281,7 +410,7 @@ function viewSimulacao(simulacaoId) {
                             <p><strong>Parcela Mensal:</strong> ${formatarMoeda(data.consorcio?.valorParcela || 0)}</p>
                             <p><strong>Parcela Reduzida:</strong> ${formatarMoeda(data.consorcio?.parcelaReduzida || (data.consorcio?.valorParcela ? data.consorcio.valorParcela / 2 : 0))}</p>
                             <p><strong>Prazo:</strong> ${data.consorcio?.parcelas || 240} meses</p>
-                            <p><strong>Total Consórcio:</strong> ${formatarMoeda(data.valorTotalConsorcio || data.consorcio?.totalPago || data.consorcio?.total || 0)}</p>
+                            <p><strong>Total Consórcio:</strong> ${formatarMoeda(valorTotalConsorcio)}</p>
                         </div>
                     </div>
                     
@@ -290,10 +419,10 @@ function viewSimulacao(simulacaoId) {
                             <i class="fas fa-chart-line"></i> Economia Total
                         </h4>
                         <p style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">
-                            ${formatarMoeda(data.economiaTotal || 0)}
+                            ${formatarMoeda(economiaTotal)}
                         </p>
                         <p style="font-size: 16px; margin-bottom: 0;">
-                            ${calcularPorcentagemEconomia(data)}% de economia
+                            ${porcentagemEconomia}% de economia
                         </p>
                     </div>
                 </div>
@@ -302,15 +431,17 @@ function viewSimulacao(simulacaoId) {
             detailsContainer.innerHTML = html;
             
             // Configurar botão para ver PDF
-            document.getElementById('view-pdf').onclick = function() {
-                // Verificar se existe o caminho do PDF no objeto data
-                const pdfUrl = data.caminhoArquivoPDF || data.url || `/pdfs/simulacao_${simulacaoId}.pdf`;
-                console.log("Tentando abrir PDF:", pdfUrl);
-                window.open(pdfUrl, '_blank');
-            };
+            const viewPdfBtn = document.getElementById('view-pdf');
+            if (viewPdfBtn) {
+                viewPdfBtn.onclick = function() {
+                    const pdfUrl = data.caminhoArquivoPDF || data.url || `/pdfs/simulacao_${simulacaoId}.pdf`;
+                    console.log("Tentando abrir PDF:", pdfUrl);
+                    window.open(pdfUrl, '_blank');
+                };
+            }
             
             // Exibir modal
-            document.getElementById('simulacao-modal').style.display = 'block';
+            Modal.openSimulacaoModal();
         })
         .catch(error => {
             console.error('Erro ao carregar detalhes da simulação:', error);
@@ -336,7 +467,6 @@ function calcularPorcentagemEconomia(data) {
 
 // Confirmar exclusão
 function confirmDelete(tipo, id) {
-    const modal = document.getElementById('confirm-modal');
     const mensagem = document.getElementById('confirm-message');
     const btnDelete = document.getElementById('confirm-delete');
     
@@ -345,11 +475,11 @@ function confirmDelete(tipo, id) {
         
         btnDelete.onclick = function() {
             deleteSimulacao(id);
-            modal.style.display = 'none';
+            Modal.closeConfirmModal();
         };
     }
     
-    modal.style.display = 'block';
+    Modal.openConfirmModal();
 }
 
 // Excluir simulação
