@@ -199,50 +199,37 @@ function loadSimulacoes(pagina, limite = 10) {
     fetch(`/api/simulacoes?pagina=${pagina}&limite=${limite}`)
         .then(response => response.json())
         .then(data => {
-            const tableBody = document.querySelector('#simulacoes-table tbody');
-            tableBody.innerHTML = '';
-            
-            if (data.simulacoes.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Nenhuma simulação encontrada</td></tr>';
+            const tbody = document.querySelector('#simulacoesTable tbody');
+            if (!tbody) {
+                console.error('Elemento tbody não encontrado');
                 return;
             }
             
+            // Limpar tabela atual
+            tbody.innerHTML = '';
+            
+            // Verificar se há dados
+            if (!data.simulacoes || data.simulacoes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Nenhuma simulação encontrada</td></tr>';
+                return;
+            }
+            
+            // Renderizar cada linha
             data.simulacoes.forEach(simulacao => {
-                const row = document.createElement('tr');
-                
-                // Formatar data
-                const data = new Date(simulacao.dataCriacao).toLocaleDateString('pt-BR');
-                
-                // Formatar número do WhatsApp
-                const whatsapp = simulacao.whatsapp ? simulacao.whatsapp.replace(/\D/g, '') : '';
-                const whatsappFormatado = whatsapp ? `(${whatsapp.slice(0,2)}) ${whatsapp.slice(2,7)}.${whatsapp.slice(7)}` : '-';
-                
-                row.innerHTML = renderTableRow(simulacao);
-                
-                tableBody.appendChild(row);
+                tbody.innerHTML += renderTableRow(simulacao);
             });
             
-            // Adicionar eventos aos botões
-            document.querySelectorAll('.btn-view').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const simulacaoId = this.getAttribute('data-id');
-                    viewSimulacao(simulacaoId);
-                });
-            });
-            
-            document.querySelectorAll('.btn-delete').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const simulacaoId = this.getAttribute('data-id');
-                    confirmDelete('simulacao', simulacaoId);
-                });
-            });
-            
-            // Gerar paginação
-            generatePagination(data.paginacao, 'simulacoes', loadSimulacoes);
+            // Atualizar paginação se necessário
+            if (data.paginacao) {
+                generatePagination(data.paginacao, 'simulacoes-pagination', loadSimulacoes);
+            }
         })
         .catch(error => {
             console.error('Erro ao carregar simulações:', error);
-            alert('Erro ao carregar simulações. Verifique o console para mais detalhes.');
+            const tbody = document.querySelector('#simulacoesTable tbody');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Erro ao carregar dados</td></tr>';
+            }
         });
 }
 
@@ -568,4 +555,91 @@ function generatePagination(paginacao, targetId, loadFunction) {
         lastPageBtn.addEventListener('click', () => loadFunction(totalPages));
         paginationContainer.appendChild(lastPageBtn);
     }
+}
+
+function filtrarSimulacoes() {
+    const nomeCliente = document.getElementById('search-nome').value.trim();
+    const rendaMin = document.getElementById('search-renda-min').value;
+    const rendaMax = document.getElementById('search-renda-max').value;
+    const valorMin = document.getElementById('valorMin').value;
+    const valorMax = document.getElementById('valorMax').value;
+    
+    // Converter valores para números e remover formatação
+    const rendaMinNumero = rendaMin ? parseFloat(rendaMin.replace(/[^\d,]/g, '').replace(',', '.')) : null;
+    const rendaMaxNumero = rendaMax ? parseFloat(rendaMax.replace(/[^\d,]/g, '').replace(',', '.')) : null;
+    const valorMinNumero = valorMin ? parseFloat(valorMin.replace(/[^\d,]/g, '').replace(',', '.')) : null;
+    const valorMaxNumero = valorMax ? parseFloat(valorMax.replace(/[^\d,]/g, '').replace(',', '.')) : null;
+    
+    fetch('/api/simulacoes?pagina=1&limite=1000')
+        .then(response => response.json())
+        .then(data => {
+            let simulacoesFiltradas = data.simulacoes;
+            
+            // Filtrar por nome do cliente
+            if (nomeCliente) {
+                simulacoesFiltradas = simulacoesFiltradas.filter(sim => 
+                    (sim.cliente?.nome || sim.nome || '').toLowerCase().includes(nomeCliente.toLowerCase())
+                );
+            }
+            
+            // Filtrar por renda familiar
+            if (rendaMinNumero) {
+                simulacoesFiltradas = simulacoesFiltradas.filter(sim => 
+                    (sim.cliente?.renda || sim.rendaFamiliar || 0) >= rendaMinNumero
+                );
+            }
+            
+            if (rendaMaxNumero) {
+                simulacoesFiltradas = simulacoesFiltradas.filter(sim => 
+                    (sim.cliente?.renda || sim.rendaFamiliar || 0) <= rendaMaxNumero
+                );
+            }
+            
+            // Filtrar por valor do imóvel
+            if (valorMinNumero) {
+                simulacoesFiltradas = simulacoesFiltradas.filter(sim => 
+                    (sim.valorImovel || sim.valorCredito || 0) >= valorMinNumero
+                );
+            }
+            
+            if (valorMaxNumero) {
+                simulacoesFiltradas = simulacoesFiltradas.filter(sim => 
+                    (sim.valorImovel || sim.valorCredito || 0) <= valorMaxNumero
+                );
+            }
+            
+            // Atualizar a tabela
+            const tbody = document.querySelector('#simulacoesTable tbody');
+            if (!tbody) {
+                console.error('Elemento tbody não encontrado');
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            
+            if (simulacoesFiltradas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Nenhuma simulação encontrada com os filtros aplicados</td></tr>';
+                return;
+            }
+            
+            simulacoesFiltradas.forEach(simulacao => {
+                tbody.innerHTML += renderTableRow(simulacao);
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao filtrar simulações:', error);
+            const tbody = document.querySelector('#simulacoesTable tbody');
+            if (tbody) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Erro ao filtrar dados</td></tr>';
+            }
+        });
+}
+
+function limparFiltros() {
+    document.getElementById('search-nome').value = '';
+    document.getElementById('search-renda-min').value = '';
+    document.getElementById('search-renda-max').value = '';
+    document.getElementById('valorMin').value = '';
+    document.getElementById('valorMax').value = '';
+    loadSimulacoes(1);
 } 

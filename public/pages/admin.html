@@ -149,18 +149,41 @@
         .search-bar {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 20px;
             background-color: #fff5e6;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
         }
         
-        .search-input {
-            flex-grow: 1;
-            padding: 10px;
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group label {
+            min-width: 120px;
+            color: #495057;
+            font-weight: 500;
+        }
+        
+        .filter-group input {
+            padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+        }
+        
+        .filter-group span {
+            color: #666;
+        }
+        
+        .filter-group .btn {
+            margin-left: auto;
         }
         
         .pagination {
@@ -273,6 +296,20 @@
             .stats-container {
                 grid-template-columns: 1fr;
             }
+            
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-group input {
+                max-width: 100%;
+            }
+            
+            .filter-group .btn {
+                margin-left: 0;
+                width: 100%;
+            }
         }
 
         /* Ajuste nas colunas da tabela */
@@ -308,6 +345,10 @@
 
         .whatsapp-link:hover {
             text-decoration: underline;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
         }
     </style>
 </head>
@@ -362,42 +403,35 @@
             </div>
             
             <!-- Tab: Simulações -->
-            <div class="tab-content active" id="simulacoes-tab">
+            <div class="tab-content active" id="simulacoes">
                 <div class="search-bar">
-                    <div style="display: flex; flex-wrap: wrap; gap: 15px; width: 100%;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <label for="search-nome">Nome do Cliente:</label>
-                            <input type="text" id="search-nome" class="search-input" placeholder="Buscar por nome...">
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Renda Familiar:</label>
-                            <div style="display: flex; gap: 5px; align-items: center;">
-                                <input type="number" id="search-renda-min" class="search-input" placeholder="De R$" style="flex: 1;">
-                                <span>até</span>
-                                <input type="number" id="search-renda-max" class="search-input" placeholder="Até R$" style="flex: 1;">
-                            </div>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Valor do Imóvel:</label>
-                            <div style="display: flex; gap: 5px; align-items: center;">
-                                <input type="number" id="search-valor-min" class="search-input" placeholder="De R$" style="flex: 1;">
-                                <span>até</span>
-                                <input type="number" id="search-valor-max" class="search-input" placeholder="Até R$" style="flex: 1;">
-                            </div>
-                        </div>
+                    <h3>Filtros</h3>
+                    <div class="filter-group">
+                        <label>Nome do Cliente:</label>
+                        <input type="text" id="search-nome" placeholder="Buscar por nome...">
                     </div>
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button class="btn btn-primary" id="btn-search-simulacoes">
+                    <div class="filter-group">
+                        <label>Renda Familiar:</label>
+                        <input type="text" id="search-renda-min" placeholder="De R$">
+                        <span>até</span>
+                        <input type="text" id="search-renda-max" placeholder="Até R$">
+                    </div>
+                    <div class="filter-group">
+                        <label>Valor do Imóvel:</label>
+                        <input type="text" id="valorMin" placeholder="De R$">
+                        <span>até</span>
+                        <input type="text" id="valorMax" placeholder="Até R$">
+                        <button class="btn btn-primary" onclick="filtrarSimulacoes()">
                             <i class="fas fa-search"></i> Filtrar
                         </button>
-                        <button class="btn btn-secondary" id="btn-clear-search">
+                        <button class="btn btn-secondary" onclick="limparFiltros()">
                             <i class="fas fa-times"></i> Limpar Filtros
                         </button>
                     </div>
                 </div>
                 
-                <div class="table-container">
-                    <table id="simulacoes-table">
+                <div class="table-responsive">
+                    <table id="simulacoesTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -406,17 +440,13 @@
                                 <th>Telefone</th>
                                 <th>Valor do Imóvel</th>
                                 <th>Renda Familiar</th>
-                                <th>Ações</th>
+                                <th class="col-actions">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Dados serão preenchidos via JavaScript -->
+                            <!-- Dados serão inseridos via JavaScript -->
                         </tbody>
                     </table>
-                    
-                    <div class="pagination" id="simulacoes-pagination">
-                        <!-- Paginação será preenchida via JavaScript -->
-                    </div>
                 </div>
             </div>
         </div>

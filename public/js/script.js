@@ -29,33 +29,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Aplicar máscaras nos campos monetários
     const camposMoeda = ['input[name="currentRent"]', 'input[name="familyIncome"]', 'input[name="propertyValue"]', 'input[name="downPayment"]', 'input[name="fgts"]'];
     
-    camposMoeda.forEach(campo => {
-        $(campo).maskMoney({
-            prefix: 'R$ ',
-            thousands: '.',
-            decimal: ',',
-            allowZero: true,
-            allowNegative: false
-        });
-    });
+    function formatarValorMonetario(valor) {
+        // Remove tudo que não for dígito
+        valor = valor.replace(/\D/g, '');
+        
+        // Remove zeros à esquerda
+        valor = valor.replace(/^0+/, '');
+        
+        // Se ficou vazio, retorna zero formatado
+        if (valor === '') return 'R$ 0,00';
+        
+        // Adiciona zeros à esquerda se necessário para ter no mínimo 3 dígitos (1 real = 100 centavos)
+        valor = valor.padStart(3, '0');
+        
+        // Separa reais e centavos
+        const reais = valor.slice(0, -2).replace(/^0+/, '') || '0';
+        const centavos = valor.slice(-2);
+        
+        // Adiciona pontos para milhar
+        const reaisFormatado = reais.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        
+        return `R$ ${reaisFormatado},${centavos}`;
+    }
     
-    // Inicializar os campos monetários
+    // Aplica a máscara em todos os campos monetários
     camposMoeda.forEach(campo => {
-        $(campo).maskMoney('mask');
+        $(campo).on('input', function(e) {
+            const valor = $(this).val();
+            $(this).val(formatarValorMonetario(valor));
+        });
+        
+        // Formata o valor inicial se houver
+        if ($(campo).val()) {
+            $(campo).val(formatarValorMonetario($(campo).val()));
+        }
     });
     
     // Inicializar máscaras
     $('[name="whatsapp"]').mask('(00) 00000-0000');
     $('[name="cpf"]').mask('000.000.000-00');
-    
-    // Inicializar máscaras monetárias
-    $('[name="familyIncome"]').maskMoney({
-        prefix: 'R$ ',
-        thousands: '.',
-        decimal: ',',
-        allowZero: true,
-        allowNegative: false
-    });
     
     // Máscara para o WhatsApp
     $('input[name="whatsapp"]').on('input', function() {
